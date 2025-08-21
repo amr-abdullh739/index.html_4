@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>موقع مدرسة الفلاح المطالي</title>
+  <style>
+    body {
+      font-family: "Tahoma", Arial, sans-serif;
+      background: linear-gradient(to right, #e3f2fd, #bbdefb);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .logo { margin: 15px 0; }
+    .logo img { width: 100px; height: auto; }
+
+    h1 {
+      color: #0d47a1;
+      background: #bbdefb;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    marquee {
+      color: #fff;
+      background: #1565c0;
+      padding: 8px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    img.main-img {
+      border: 4px solid #0d47a1;
+      border-radius: 12px;
+      margin: 20px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    form {
+      background: #ffffff;
+      width: 60%;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      text-align: right;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+      color: #0d47a1;
+    }
+
+    input, select {
+      width: 95%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #90a4ae;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    input:focus, select:focus {
+      border-color: #1976d2;
+      box-shadow: 0 0 5px #1976d2;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      background: #1976d2;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    input[type="submit"]:hover {
+      background: #0d47a1;
+    }
+
+    #loginPage { }
+    #mainPage { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="logo">
+    <img src="/storage/emulated/0/Pictures/logo.png" alt="شعار المدرسة">
+  </div>
+
+  <h1>تسجيل الدخول عن طريق الموقع</h1>
+  <hr>
+  <marquee direction="left">الموقع الرسمي لمدرسة أوائل الإعدادية</marquee>
+  <hr>
+
+  <!-- صفحة تسجيل الدخول -->
+  <div id="loginPage">
+    <img class="main-img" src="/storage/emulated/0/Pictures/WhatsApp/IMG-20250505-WA0023.jpg" width="400px" height="300">
+
+    <form onsubmit="return goToMain()">
+      <label for="email">الايميل</label>
+      <input type="email" id="email" placeholder="ادخل الايميل" required>
+
+      <label for="pas">كلمة المرور</label>
+      <input type="password" id="pas" placeholder="ادخل كلمة المرور" required>
+
+      <label for="pass">تأكيد كلمة المرور</label>
+      <input type="password" id="pass" placeholder="تأكد من كلمة المرور" required>
+
+      <input type="submit" value="تسجيل الدخول">
+    </form>
+  </div>
+
+  <!-- الصفحة الثانية -->
+  <div id="mainPage">
+    <h1>البيانات الأساسية واختيار الصف</h1>
+    <form id="studentForm" onsubmit="return saveAndPrintStudentInfo()">
+      <label for="name">الاسم</label>
+      <input type="text" id="name" placeholder="ادخل الاسم" required>
+
+      <label for="age">العمر</label>
+      <input type="number" id="age" placeholder="ادخل العمر" required>
+
+      <label for="number">رقم الهاتف</label>
+      <input type="tel" id="number" placeholder="ادخل رقم الهاتف" required>
+
+      <label for="classSelect">اختر الصف</label>
+      <select id="classSelect" required>
+        <option value="">-- اختر الصف --</option>
+        <option value="1">الصف الأول</option>
+        <option value="2">الصف الثاني</option>
+        <option value="3">الصف الثالث</option>
+        <option value="4">الصف الرابع</option>
+        <option value="5">الصف الخامس</option>
+        <option value="6">الصف السادس</option>
+        <option value="7">الصف السابع</option>
+        <option value="8">الصف الثامن</option>
+        <option value="9">الصف التاسع</option>
+        <option value="12">الصف الثالث الثانوي</option>
+      </select>
+
+      <input type="submit" value="تأكيد البيانات وطباعة">
+    </form>
+  </div>
+
+  <script>
+    let studentData = {};
+
+    function goToMain() {
+      let pass = document.getElementById("pas").value;
+      let confirm = document.getElementById("pass").value;
+
+      if (pass !== confirm) {
+        alert("كلمة المرور غير متطابقة ❌");
+        return false;
+      }
+
+      document.getElementById("loginPage").style.display = "none";
+      document.getElementById("mainPage").style.display = "block";
+      return false;
+    }
+
+    const booksData = {
+      "1": ["الرياضيات 1", "اللغة العربية 1", "العلوم 1", "الإنجليزية 1", "القرآن الكريم", "العلوم الإسلامية"],
+      "2": ["الرياضيات 2", "اللغة العربية 2", "العلوم 2", "الإنجليزية 2", "القرآن الكريم", "العلوم الإسلامية"],
+      "3": ["الرياضيات 3", "اللغة العربية 3", "العلوم 3", "الإنجليزية 3", "القرآن الكريم", "العلوم الإسلامية"],
+      "4": ["الرياضيات 4", "اللغة العربية 4", "العلوم 4", "الإنجليزية 4", "القرآن الكريم", "العلوم الإسلامية"],
+      "5": ["الرياضيات 5", "اللغة العربية 5", "العلوم 5", "الإنجليزية 5", "القرآن الكريم", "العلوم الإسلامية"],
+      "6": ["الرياضيات 6", "اللغة العربية 6", "العلوم 6", "الإنجليزية 6", "القرآن الكريم", "العلوم الإسلامية"],
+      "7": ["الرياضيات 7", "اللغة العربية 7", "العلوم 7", "الإنجليزية 7", "القرآن الكريم", "العلوم الإسلامية"],
+      "8": ["الرياضيات 8", "اللغة العربية 8", "العلوم 8", "الإنجليزية 8", "القرآن الكريم", "العلوم الإسلامية"],
+      "9": ["الرياضيات 9", "اللغة العربية 9", "العلوم 9", "الإنجليزية 9", "القرآن الكريم", "العلوم الإسلامية"],
+      "12": ["الرياضيات 3 ثانوي", "اللغة العربية 3 ثانوي", "الفيزياء", "الكيمياء", "الأحياء", "الإنجليزية 3 ثانوي", "القرآن الكريم", "العلوم الإسلامية"]
+    };
+
+    function saveAndPrintStudentInfo() {
+      const name = document.getElementById("name").value;
+      const age = document.getElementById("age").value;
+      const number = document.getElementById("number").value;
+      const selectedClass = document.getElementById("classSelect").value;
+
+      if (!selectedClass) {
+        alert("الرجاء اختيار الصف");
+        return false;
+      }
+
+      studentData = {
+        name,
+        age,
+        number,
+        selectedClass,
+        books: booksData[selectedClass]
+      };
+
+      // طباعة البيانات مباشرة بعد الحفظ
+      let printWindow = window.open('', '', 'width=800,height=600');
+      printWindow.document.write('<html><head><title>طباعة بيانات الطالب</title>');
+      printWindow.document.write('<style>body{font-family:Tahoma; direction:rtl; text-align:right; margin:30px;} p, li{margin:8px 0; border-bottom:1px dashed #000; padding-bottom:4px;} ul{list-style:none; padding:0;}</style>');
+      printWindow.document.write('</head><body>');
+      printWindow.document.write(`<h2>بيانات الطالب</h2>`);
+      printWindow.document.write(`<p>الاسم: ${studentData.name}</p>`);
+      printWindow.document.write(`<p>العمر: ${studentData.age}</p>`);
+      printWindow.document.write(`<p>رقم الهاتف: ${studentData.number}</p>`);
+      printWindow.document.write(`<p>الصف المختار: ${document.getElementById("classSelect").selectedOptions[0].text}</p>`);
+      printWindow.document.write('<h3>الكتب:</h3><ul>');
+      studentData.books.forEach(b => printWindow.document.write(`<li>${b}</li>`));
+      printWindow.document.write('</ul>');
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.print();
+
+      return false; // منع إعادة تحميل الصفحة
+    }
+  </script>
+
+</body>
+</html>
